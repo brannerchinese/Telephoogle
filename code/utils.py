@@ -11,11 +11,12 @@ all_punct = string.punctuation + (
 
 def clean_for_edit_distance(s):
     """Convert to list and strip punctuation; if Chinese, use special rule."""
-    cleaned = [i.strip(string.punctuation) for i in s.split()]
+    cleaned = s.split()
     # Deal with Chinese case.
     if [s] == cleaned:
         cleaned = [i.strip(all_punct) for i in list(s)]
-        cleaned = [i for i in cleaned if i]
+    # Downcase anything that can be downcased and delete empties.
+    cleaned = [i.strip(string.punctuation).lower() for i in cleaned if i]
     return cleaned
 
 def get_edit_distance(s1, s2):
